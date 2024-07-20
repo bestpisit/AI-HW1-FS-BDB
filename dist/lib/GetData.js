@@ -50,9 +50,8 @@ function normalizeString(input) {
 function isFloat(str) {
     return !isNaN(Number(str)) && !isNaN(parseFloat(str));
 }
-function GetData() {
+function GetData(url) {
     return __awaiter(this, void 0, void 0, function* () {
-        let url = 'https://myweb.cmu.ac.th/sansanee.a/ISNE_MLDS/dataset/ionosphere.txt';
         var data = yield fetchAndConvertTSVtoJSON(url);
         fs.writeFileSync('data.json', JSON.stringify(data));
         console.log(data === null || data === void 0 ? void 0 : data.keys, data === null || data === void 0 ? void 0 : data.json[(data === null || data === void 0 ? void 0 : data.json.length) - 2]);

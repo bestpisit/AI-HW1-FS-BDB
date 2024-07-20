@@ -42,8 +42,7 @@ function isFloat(str:string) {
     return !isNaN(Number(str)) && !isNaN(parseFloat(str));
 }
 
-export async function GetData() {
-    let url = 'https://myweb.cmu.ac.th/sansanee.a/ISNE_MLDS/dataset/ionosphere.txt';
+export async function GetData(url: string) {
     var data = await fetchAndConvertTSVtoJSON(url);
     fs.writeFileSync('data.json', JSON.stringify(data));
     console.log(data?.keys, data?.json[data?.json.length - 2]);
