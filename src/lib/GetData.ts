@@ -1,4 +1,6 @@
-async function fetchAndConvertTSVtoJSON(url) {
+const fs = require('fs');
+
+async function fetchAndConvertTSVtoJSON(url:string) {
     try {
         const response = await fetch(url);
         const tsvText = await response.text();
@@ -8,9 +10,9 @@ async function fetchAndConvertTSVtoJSON(url) {
         const data = lines.map(line => {
             const values = line.split('\t');
             return headers.reduce((obj, header, index) => {
-                obj[header] = normalizeString(values[index]);
+                obj[header as string] = normalizeString(values[index]);
                 return obj;
-            }, {});
+            }, {} as { [key: string]: any });
         });
 
         return { keys: headers, json: data };
@@ -19,7 +21,7 @@ async function fetchAndConvertTSVtoJSON(url) {
     }
 }
 
-function normalizeString(input) {
+function normalizeString(input:string) {
     if (!input) return '';
 
     // Decode hexadecimal escape sequences
@@ -36,15 +38,13 @@ function normalizeString(input) {
     }
 }
 
-function isFloat(str) {
-    return !isNaN(str) && !isNaN(parseFloat(str));
+function isFloat(str:string) {
+    return !isNaN(Number(str)) && !isNaN(parseFloat(str));
 }
 
-
-main();
-
-async function main() {
+export async function GetData() {
     let url = 'https://myweb.cmu.ac.th/sansanee.a/ISNE_MLDS/dataset/ionosphere.txt';
     var data = await fetchAndConvertTSVtoJSON(url);
-    console.log(data.keys, data.json[0]);
+    fs.writeFileSync('data.json', JSON.stringify(data));
+    console.log(data?.keys, data?.json[data?.json.length - 2]);
 }
