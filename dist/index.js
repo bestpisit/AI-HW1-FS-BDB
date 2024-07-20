@@ -12,11 +12,11 @@ const data = JSON.parse(fs_1.default.readFileSync(dataPath, 'utf8'));
 const mockData = {
     keys: ['f1', 'f2'],
     json: [
-        { f1: 1, f2: 0, class: 'A' },
-        { f1: 3, f2: 0, class: 'A' },
-        { f1: 5, f2: 0, class: 'B' },
-        { f1: 3, f2: 0, class: 'B' }
+        { f1: 1, f2: 2, class: 'A' },
+        { f1: 3, f2: 4, class: 'A' },
+        { f1: 5, f2: 6, class: 'B' },
+        { f1: 3, f2: 4, class: 'B' }
     ]
 };
-const { xi1, xi2 } = (0, SFS_1.SFS)(data); // Calculate best feature
+const { xi1, xi2 } = (0, SFS_1.SFS)(mockData); // Calculate best feature
 console.log(`Best features: ${xi1}, ${xi2}`); // Output best features

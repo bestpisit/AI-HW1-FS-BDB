@@ -10,10 +10,10 @@ const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
 const mockData = {
     keys: ['f1','f2'],
     json: [
-        { f1: 1, f2: 0, class: 'A' },
-        { f1: 3, f2: 0, class: 'A' },
-        { f1: 5, f2: 0, class: 'B' },
-        { f1: 3, f2: 0, class: 'B' }
+        { f1: 1, f2: 2, class: 'A' },
+        { f1: 3, f2: 4, class: 'A' },
+        { f1: 5, f2: 6, class: 'B' },
+        { f1: 3, f2: 4, class: 'B' }
     ]
 }
 
