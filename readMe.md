@@ -1,4 +1,3 @@
-/**
 ## Installation and Usage Instructions:
 
 To install the dependencies, run the following command:
