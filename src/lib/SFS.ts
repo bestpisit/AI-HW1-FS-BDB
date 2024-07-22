@@ -28,8 +28,8 @@ function C(k: string, data: any, classValues: Set<string>) {
                     SDj += Math.pow(data[i][k] - meanj, 2);
                 }
             }
-            SDi = Math.sqrt(SDi / data.length);
-            SDj = Math.sqrt(SDj / data.length);
+            SDi = Math.sqrt(SDi / (data.length-1));
+            SDj = Math.sqrt(SDj / (data.length-1));
             if (SDi === 0 || SDj === 0) {
                 continue;
             }
@@ -55,6 +55,7 @@ function findClass(data: any) {
 export function SFS(data: any) {
     const features = data.keys;
     const dataValues = data.json;
+    let percent = 0.0;
 
     const classValues = findClass(dataValues);
 
