@@ -28,10 +28,10 @@ async function checkMain() {
     const n = 1;
     for (let i = 0; i < n; i++) {
         await main(false);
-        await main(true);
+        // await main(true);
     }
-    console.log("Accuracy 1: " + (avg1/n).toFixed(2) + "%");
-    console.log("Accuracy 2: " + (avg2/n).toFixed(2) + "%");
+    // console.log("Accuracy 1: " + (avg1/n).toFixed(2) + "%");
+    // console.log("Accuracy 2: " + (avg2/n).toFixed(2) + "%");
 }
 
 async function main(check: boolean) {
@@ -82,17 +82,27 @@ async function main(check: boolean) {
     const FN = confusionMatrix.get('gb');
 
     const accuracy = ((TP + TN) / (TP + TN + FP + FN) * 100);
-    const errorRate = ((FP + FN) / (TP + TN + FP + FN) * 100);;
+    const errorRate = ((FP + FN) / (TP + TN + FP + FN) * 100);
+    const sensitivity = (TP / (TP + FN) * 100);
+    const specificity = (TN / (TN + FP) * 100);
+    const precision = (TP / (TP + FP) * 100);
+    const recall = sensitivity;
+    const f1 = (2 * (precision * recall) / (precision + recall));
 
     if (check) {
-        avg2 += accuracy;
+        avg2 += f1;
     }
     else {
-        avg1 += accuracy;
+        avg1 += f1;
     }
 
     console.log("Accuracy: " + accuracy.toFixed(2) + "%");
     console.log("Error Rate: " + errorRate.toFixed(2) + "%");
+    console.log("Sensitivity: " + sensitivity.toFixed(2) + "%");
+    console.log("Specificity: " + specificity.toFixed(2) + "%");
+    console.log("Precision: " + precision.toFixed(2) + "%");
+    console.log("Recall: " + recall.toFixed(2) + "%");
+    console.log("F1 Score: " + f1.toFixed(2) + "%");
 
 
     // const Values: any = [];
