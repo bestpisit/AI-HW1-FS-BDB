@@ -34,7 +34,8 @@ function C(k: string, data: any, classValues: Set<string>) {
                 continue;
             }
             //calculate dij
-            let dij = 0.5 * (Math.pow(SDi,2)/Math.pow(SDj,2) + Math.pow(SDj,2)/Math.pow(SDi,2) - 2) + 0.5 * (Math.pow(meani - meanj, 2) / (Math.pow(SDi,-2) + Math.pow(SDj,-2)));
+            let dij = 0.5 * (Math.pow(SDi,2)/Math.pow(SDj,2) + Math.pow(SDj,2)/Math.pow(SDi,2) - 2) +
+                      0.5 * (Math.pow(meani - meanj, 2) / (Math.pow(SDi,-2) + Math.pow(SDj,-2)));
             if(min > dij) {
                 min = dij;
             }
@@ -55,7 +56,6 @@ function findClass(data: any) {
 export function SFS(data: any) {
     const features = data.keys;
     const dataValues = data.json;
-    let percent = 0.0;
 
     const classValues = findClass(dataValues);
 
@@ -69,15 +69,15 @@ export function SFS(data: any) {
             max = c;
             xi1 = feature;
         }
-        // console.log(`C(${feature}) = ${c}`);
     }
+    // console.log(max);
 
     //find xi2
     let maxpij = 0;
     let xi2 = '';
     for(const feature of features) {
         if (feature === 'class' || feature === xi1) continue;
-        const pij = CrossCorrelation(dataValues, xi1, feature);
+        const pij = C(feature,dataValues,classValues)-Math.abs(CrossCorrelation(dataValues, xi1, feature));
         // console.log(`P(${xi1},${feature}) = ${pij}`);
         if(maxpij < pij) {
             maxpij = pij;

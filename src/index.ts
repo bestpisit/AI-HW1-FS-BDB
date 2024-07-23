@@ -45,7 +45,7 @@ async function main(check: boolean) {
     console.log(`Best features: ${xi1}, ${xi2}`); // Output best features
 
     const crossValidation = 0.1; // 10% of data for cross-validation
-    const shuffledData = data.json.sort(() => Math.random() - 0.5);
+    const shuffledData = data.json.sort(() => Math.random() - 0.5); //randomly shuffle data
 
     const trainSize = Math.floor(shuffledData.length * (1 - crossValidation));
     const trainData = shuffledData.slice(0, trainSize);
@@ -62,15 +62,14 @@ async function main(check: boolean) {
         }))
     }
 
-    const NBCML = new NBC();
-
+    const NBCML = new NBC(); //This is the model
     NBCML.train(NBCData);
 
     const confusionMatrix = ConfusionMatrix(
-        testData.map((row: any) => (
+        trainData.map((row: any) => (
             row['class']
         )),
-        testData.map((row: any) => NBCML.predict([row[xi1], row[xi2]]))
+        trainData.map((row: any) => NBCML.predict([row[xi1], row[xi2]]))
     );
 
     console.log(confusionMatrix);
@@ -105,17 +104,17 @@ async function main(check: boolean) {
     console.log("F1 Score: " + f1.toFixed(2) + "%");
 
 
-    // const Values: any = [];
-    // // bar1.start(data.json.length, 0);
+    const Values: any = [];
+    // bar1.start(data.json.length, 0);
 
-    // for (const point of data.json) {
-    //     Values.push({ x: point[xi1], y: point[xi2], class: point.class });
-    //     // bar1.update(Values.length);
-    //     // make it sleep for 1 second
-    //     // await new Promise(r => setTimeout(r, 10));
-    // }
+    for (const point of data.json) {
+        Values.push({ x: point[xi1], y: point[xi2], class: NBCML.predict([point[xi1], point[xi2]]) });
+        // bar1.update(Values.length);
+        // make it sleep for 1 second
+        // await new Promise(r => setTimeout(r, 10));
+    }
 
-    // fs.writeFileSync(path.resolve(__dirname, '../assets/Values.json'), JSON.stringify(Values));
+    fs.writeFileSync(path.resolve(__dirname, '../assets/Values.json'), JSON.stringify(Values));
 
     // bar1.stop(); // Stop the progress bar
 }

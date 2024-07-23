@@ -1,3 +1,6 @@
+## Prerequisites:
+- Node.js installed on your machine.
+
 ## Installation and Usage Instructions:
 
 To install the dependencies, run the following command:
@@ -23,3 +26,4 @@ To run the application in production mode, use the following command:
 ```
 npm run start
 ```
+

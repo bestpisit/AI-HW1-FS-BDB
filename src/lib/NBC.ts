@@ -38,7 +38,7 @@ class NBC {
             }
         }
 
-        //find covariance matrix of each class
+        //find covariance matrices of each class
         for (const row of data.value) {
             const className = row.class;
             if (!this.covarianceMatrix.has(className)) {
@@ -50,7 +50,8 @@ class NBC {
                     if (!this.covarianceMatrix.get(className).hasOwnProperty(key1 + key2)) {
                         this.covarianceMatrix.get(className)[key1 + key2] = 0;
                     }
-                    this.covarianceMatrix.get(className)[key1 + key2] += (row[key1] - this.meanVector.get(className)[key1]) * (row[key2] - this.meanVector.get(className)[key2]);
+                    this.covarianceMatrix.get(className)[key1 + key2] += (row[key1] -
+                        this.meanVector.get(className)[key1]) * (row[key2] - this.meanVector.get(className)[key2]);
                 }
             }
         }
@@ -62,7 +63,6 @@ class NBC {
                 }
             }
         }
-
 
         //convert meanVector to array
         for (const className of this.meanVector.keys()) {
@@ -85,6 +85,10 @@ class NBC {
         for (const className of this.classCounts.keys()) {
             this.priorProbability.set(className, this.classCounts.get(className) / data.value.length);
         }
+
+        console.log('Mean Vector:', this.meanVector);
+        console.log('Covariance Matrix:', this.covarianceMatrix);
+        console.log('Prior Probability:', this.priorProbability);
     }
 
     predict(newData: number[]): string {

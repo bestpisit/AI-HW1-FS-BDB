@@ -20,6 +20,5 @@ export function CrossCorrelation(data: any, xi1: string, xj: string) {
         return 0;
     }
     pij = pij / Math.sqrt(sumXipow2 * sumXjpow2);
-    pij = Math.abs(pij);
     return pij;
 }
