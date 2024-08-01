@@ -86,9 +86,23 @@ class NBC {
             this.priorProbability.set(className, this.classCounts.get(className) / data.value.length);
         }
 
-        console.log('Mean Vector:', this.meanVector);
-        console.log('Covariance Matrix:', this.covarianceMatrix);
-        console.log('Prior Probability:', this.priorProbability);
+        console.log('Mean Vector:');
+        for (const [className, mean] of this.meanVector.entries()) {
+            const roundedMean = mean.map((value: any) => value.toFixed(3));
+            console.log(className, roundedMean);
+        }
+        console.log('Covariance Matrix:');
+        this.covarianceMatrix.forEach((values, key) => {
+            console.log(`Covariance Matrix for class '${key}':`);
+            values.forEach((row: any[]) => {
+                const formattedRow = row.map(value => value.toFixed(3));
+                console.log(`[ '${formattedRow.join("', '")}' ]`);
+            });
+        });
+        console.log('Prior Probability:');
+        for (const [className, prob] of this.priorProbability.entries()) {
+            console.log(className, prob.toFixed(3));
+        }
     }
 
     predict(newData: number[]): string {

@@ -32,27 +32,20 @@ let avg1 = 0, avg2 = 0;
 checkMain(data);
 async function checkMain(dataSet: any) {
     const crossValidation = 0.1; // 10% of data for cross-validation
-    const n = 1/crossValidation;
-    for (let i = 0; i < n; i++) {
+    const n = 1/crossValidation; //Fold
+    for (let i = 0; i < n; i++) { //Loop through each fold
+        console.log("Fold: " + (i+1));
         const trainData: any = [];
         const testData: any = [];
-        for(let j=0;j<dataSet.json.length;j++){
-            // console.log(j)
+        for(let j=0;j<dataSet.json.length;j++){ //Split data into train and test datasets
             if(j>=i*crossValidation*dataSet.json.length && j < (i+1)*crossValidation*dataSet.json.length){
-                console.log(j);
                 testData.push(dataSet.json[j]);
             }
             else{
                 trainData.push(dataSet.json[j]);
             }
         }
-        // const shuffledData = data.json.sort(() => Math.random() - 0.5); //randomly shuffle data
-
-        // const trainSize = Math.floor(shuffledData.length * (1 - crossValidation));
-        // const trainData = shuffledData.slice(0, trainSize);
-        // const testData = shuffledData.slice(trainSize);
         await main(false,dataSet,trainData,testData);
-        // await main(true);
     }
     console.log("Accuracy 1: " + (avg1 / n).toFixed(2) + "%");
     console.log("Accuracy 2: " + (avg2 / n).toFixed(2) + "%");
@@ -112,8 +105,8 @@ async function main(check: boolean, data: any, trainData: any, testData: any) {
         avg1 += f1;
     }
 
-    // console.log("Accuracy: " + accuracy.toFixed(2) + "%");
-    // console.log("Error Rate: " + errorRate.toFixed(2) + "%");
+    console.log("Accuracy: " + accuracy.toFixed(2) + "%");
+    console.log("Error Rate: " + errorRate.toFixed(2) + "%");
     // console.log("Sensitivity: " + sensitivity.toFixed(2) + "%");
     // console.log("Specificity: " + specificity.toFixed(2) + "%");
     // console.log("Precision: " + precision.toFixed(2) + "%");
